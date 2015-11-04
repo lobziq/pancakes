@@ -1,32 +1,58 @@
-<html>
+{% load staticfiles %}
+<!DOCTYPE html>
+<html ng-app="searchApp">
     <head>
         <title>Testey food yeah</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="styles/main.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-resource.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/main.css' %}">
+                
+        <script src="https://code.angularjs.org/1.4.7/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.4.7/angular-resource.min.js"></script>
+        <script src="{% static 'js/services.js' %}"></script>
+        <script src="{% static 'js/search.js' %}"></script>
     </head>
-    <body>
+    <body ng-controller="SearchCtrl">
+        {% verbatim %}  
         <div class="jumbotron">
             <div class="container">
                 <h1>Поиск по рецептам</h1>
-                <p>check this</p>
                 
-                <input placeholder="" name="user" form="data">
-                    
-                <input placeholder="" name="user" form="data">
+                <form>
+                    <div class="form-group">
+                        <input type="search" ng-model="searchBox" class="form-control" placeholder="Начните искать рецепты">  
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default" ng-click="search()">Поиск</button>
+                        <button type="submit" class="btn btn-default" ng-click="toggleFilter()">Фильтр ингредиентов</button>
+                    </div>
+                    <div class="form-inline" ng-hide="filter">
+                        <div class="input-group">
+                            <input ng-model="includeBox" class="form-control" placeholder="добавить">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="addToInclude()">+</button>
+                            </span>
+                        </div>
+                        <div class="input-group">
+                            <input ng-model="excludeBox" class="form-control" placeholder="исключить">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="addToExclude()">-</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+                <div class="container">
+                    <span ng-repeat="i in include">
+                        <button type="button" class="btn btn-success">{{ i }}</button>        
+                    </span>
+                    <span ng-repeat="i in exclude">
+                        <button type="button" class="btn btn-danger">{{ i }}</button>    
+                    </span>
+                </div>       
             </div>
-        
         </div>
-        
-        {% if recipes_list %}
-        <ul>
-        {% for recipe in recipes_list %}
-            <li>{{ recipe.name }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No recipes are available.</p>
-    {% endif %}
+        <div class="container" ng-repeat="r in recipes">
+            <strong>{{r.recipe.name}}</strong> <div ng-repeat="c in r.contents"> {{c.name}} </div>
+        </div>
+        {% endverbatim %}
     </body>
 </html>

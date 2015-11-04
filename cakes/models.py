@@ -25,7 +25,5 @@ class RecipeContent(models.Model):
     contents = models.ManyToManyField(Ingredient)
 
     def __str__(self):
-        s = self.recipe.name
-        #for i in self.contents:
-            #s += "LOL"
+        s = self.recipe.name + " content"
         return s

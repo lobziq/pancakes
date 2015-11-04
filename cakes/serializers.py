@@ -6,3 +6,7 @@ class RecipeContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecipeContent
         depth = 1
+
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient

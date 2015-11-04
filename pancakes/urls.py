@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^$', include('cakes.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'api/recipes/$', api.RecipeContentList.as_view()),
+    url(r'api/ingredients/$', api.IngredientList.as_view()),
     ]
 
