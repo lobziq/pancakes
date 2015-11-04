@@ -22,36 +22,46 @@
                         <input type="search" ng-model="searchBox" class="form-control" placeholder="Начните искать рецепты">  
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default" ng-click="search()">Поиск</button>
+                        <button type="submit" class="btn btn-default" ng-click="search()">Поиск
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
                         <button type="submit" class="btn btn-default" ng-click="toggleFilter()">Фильтр ингредиентов</button>
                     </div>
                     <div class="form-inline" ng-hide="filter">
                         <div class="input-group">
                             <input ng-model="includeBox" class="form-control" placeholder="добавить">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="addToInclude()">+</button>
+                                <button class="btn btn-success" type="button" ng-click="addToInclude()">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
                             </span>
                         </div>
                         <div class="input-group">
                             <input ng-model="excludeBox" class="form-control" placeholder="исключить">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="addToExclude()">-</button>
+                                <button class="btn btn-danger" type="button" ng-click="addToExclude()">
+                                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                </button>
                             </span>
                         </div>
                     </div>
                 </form>
-                <div class="container">
+                <div class="container row">
                     <span ng-repeat="i in include">
-                        <button type="button" class="btn btn-success">{{ i }}</button>        
+                        <button type="button" class="btn btn-success" ng-click="removeFilterItem(i)">{{i}}
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>        
                     </span>
                     <span ng-repeat="i in exclude">
-                        <button type="button" class="btn btn-danger">{{ i }}</button>    
+                        <button type="button" class="btn btn-danger" ng-click="removeFilterItem(i)">{{i}}
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>    
                     </span>
                 </div>       
             </div>
         </div>
         <div class="container" ng-repeat="r in recipes">
-            <strong>{{r.recipe.name}}</strong> <div ng-repeat="c in r.contents"> {{c.name}} </div>
+            <strong>{{r.recipe.name}} </strong><div ng-repeat="c in r.contents">{{c.name | lowercase}}</div>
         </div>
         {% endverbatim %}
     </body>

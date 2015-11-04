@@ -26,14 +26,14 @@ searchApp.controller('SearchCtrl', function ($scope, Recipes, Ingredients) {
     $scope.checkForIngredient = function(name) {
         for (var i = 0; i < $scope.include.length; i++) {
             if ($scope.include[i].toUpperCase() === name.toUpperCase()) {
-                alert("Такой ингредиент уже добавлен в список");
+                alert("Такой ингредиент уже добавлен в список фильтра");
                 return true;            
             }         
         }
         
         for (var i = 0; i < $scope.exclude.length; i++) {
             if ($scope.exclude[i].toUpperCase() === name.toUpperCase()) {
-                alert("Такой ингредиент уже добавлен в список");
+                alert("Такой ингредиент уже добавлен в список фильтра");
                 return true;         
             }         
         }
@@ -58,6 +58,7 @@ searchApp.controller('SearchCtrl', function ($scope, Recipes, Ingredients) {
     $scope.addToExclude = function() {
         if ($scope.checkForIngredient($scope.excludeBox) == false) {
             $scope.exclude.push($scope.excludeBox);
+            $scope.excludeBox = "";
         }
     }
     
@@ -67,6 +68,15 @@ searchApp.controller('SearchCtrl', function ($scope, Recipes, Ingredients) {
         }
         else { 
             $scope.filter = true;
+        }
+    }
+    
+    $scope.removeFilterItem = function(item) {
+        if ($scope.include.indexOf(item) > -1) {
+            $scope.include.splice($scope.include.indexOf(item), 1);       
+        }
+        if ($scope.exclude.indexOf(item) > -1) {
+            $scope.exclude.splice($scope.exclude.indexOf(item), 1);       
         }
     }
 });

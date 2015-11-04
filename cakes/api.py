@@ -14,7 +14,6 @@ class RecipeContentList(APIView):
     def get(self, request, format=None):
         search_word = self.request.query_params.get('search', None)
         params = dict(self.request.query_params)
-        print(params)
 
         if (search_word != None):
             recipe_contents = RecipeContent.objects.all().filter(Q(contents__name__icontains = search_word) | Q(recipe__name__icontains = search_word))
@@ -37,7 +36,7 @@ class RecipeContentList(APIView):
             except:
                 pass
 
-        serialized_rc = RecipeContentSerializer(recipe_contents, many=True)
+        serialized_rc = RecipeContentSerializer(recipe_contents, many = True)
         return Response(serialized_rc.data)
 
 class IngredientList(APIView):
