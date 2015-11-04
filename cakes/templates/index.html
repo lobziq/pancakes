@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Testey food yeah</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="styles/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-resource.js"></script>
+    </head>
+    <body>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Поиск по рецептам</h1>
+                <p>check this</p>
+                
+                <input placeholder="" name="user" form="data">
+                    
+                <input placeholder="" name="user" form="data">
+            </div>
+        
+        </div>
+        
+        {% if recipes_list %}
+        <ul>
+        {% for recipe in recipes_list %}
+            <li>{{ recipe.name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recipes are available.</p>
+    {% endif %}
+    </body>
+</html>
