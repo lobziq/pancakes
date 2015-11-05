@@ -326,7 +326,7 @@ ALTER TABLE cakes_recipecontent OWNER TO pancakes;
 CREATE TABLE cakes_recipecontent_contents (
     id integer NOT NULL,
     recipecontent_id integer NOT NULL,
-    ingredient_id integer NOT NULL
+    variation_id integer NOT NULL
 );
 
 
@@ -770,6 +770,7 @@ COPY cakes_ingredient (id, name) FROM stdin;
 14	сода пищевая
 15	масло сливочное
 16	сахарная пудра
+19	соль
 \.
 
 
@@ -777,7 +778,7 @@ COPY cakes_ingredient (id, name) FROM stdin;
 -- Name: cakes_ingredient_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pancakes
 --
 
-SELECT pg_catalog.setval('cakes_ingredient_id_seq', 16, true);
+SELECT pg_catalog.setval('cakes_ingredient_id_seq', 19, true);
 
 
 --
@@ -790,6 +791,7 @@ COPY cakes_recipe (id, name) FROM stdin;
 3	Жареная картошка
 4	Печенье с чаем
 5	Печенье сэндвич
+6	Простые тонкие блины на молоке
 \.
 
 
@@ -797,7 +799,7 @@ COPY cakes_recipe (id, name) FROM stdin;
 -- Name: cakes_recipe_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pancakes
 --
 
-SELECT pg_catalog.setval('cakes_recipe_id_seq', 5, true);
+SELECT pg_catalog.setval('cakes_recipe_id_seq', 6, true);
 
 
 --
@@ -805,11 +807,9 @@ SELECT pg_catalog.setval('cakes_recipe_id_seq', 5, true);
 --
 
 COPY cakes_recipecontent (id, recipe_id) FROM stdin;
-3	1
-4	2
-6	4
-7	3
-8	5
+13	4
+15	5
+14	1
 \.
 
 
@@ -817,24 +817,14 @@ COPY cakes_recipecontent (id, recipe_id) FROM stdin;
 -- Data for Name: cakes_recipecontent_contents; Type: TABLE DATA; Schema: public; Owner: pancakes
 --
 
-COPY cakes_recipecontent_contents (id, recipecontent_id, ingredient_id) FROM stdin;
-7	3	1
-8	3	2
-11	4	3
-12	4	4
-14	6	1
-15	6	5
-16	7	6
-17	7	7
-18	8	8
-19	8	9
-20	8	10
-21	8	11
-22	8	12
-23	8	13
-24	8	14
-25	8	15
-26	8	16
+COPY cakes_recipecontent_contents (id, recipecontent_id, variation_id) FROM stdin;
+27	13	1
+28	13	7
+29	14	1
+31	15	10
+32	15	9
+33	15	11
+30	14	11
 \.
 
 
@@ -842,14 +832,14 @@ COPY cakes_recipecontent_contents (id, recipecontent_id, ingredient_id) FROM std
 -- Name: cakes_recipecontent_contents_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pancakes
 --
 
-SELECT pg_catalog.setval('cakes_recipecontent_contents_id_seq', 26, true);
+SELECT pg_catalog.setval('cakes_recipecontent_contents_id_seq', 33, true);
 
 
 --
 -- Name: cakes_recipecontent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pancakes
 --
 
-SELECT pg_catalog.setval('cakes_recipecontent_id_seq', 8, true);
+SELECT pg_catalog.setval('cakes_recipecontent_id_seq', 15, true);
 
 
 --
@@ -865,6 +855,9 @@ COPY cakes_variation (id, name, ingredient_id) FROM stdin;
 6	Чай "Гринфилд" Лемон спарк 1,5г*25	5
 7	Чай "Липтон" черный листовой 100г	5
 8	Чай "Черный Дракон" Молочный улун 100г м/у	5
+9	Соль "Сага" морская пищевая 500г картон	19
+10	Мука "Увелка" высший сорт 2кг	8
+11	Молоко "Пармалат" Низколактозное 1,8% 1л	2
 \.
 
 
@@ -872,7 +865,7 @@ COPY cakes_variation (id, name, ingredient_id) FROM stdin;
 -- Name: cakes_variation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pancakes
 --
 
-SELECT pg_catalog.setval('cakes_variation_id_seq', 8, true);
+SELECT pg_catalog.setval('cakes_variation_id_seq', 11, true);
 
 
 --
@@ -918,6 +911,24 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 36	2015-11-04 15:27:39.44434+05	15	масло сливочное	1		8	1
 37	2015-11-04 15:27:44.249619+05	16	сахарная пудра	1		8	1
 38	2015-11-04 15:28:21.856272+05	8	Печенье сэндвич content	1		10	1
+39	2015-11-05 17:32:14.833899+05	8	Печенье сэндвич content	3		10	1
+40	2015-11-05 17:32:14.841858+05	7	Жареная картошка content	3		10	1
+41	2015-11-05 17:32:14.84287+05	6	Печенье с чаем content	3		10	1
+42	2015-11-05 17:32:14.843859+05	4	Кот и блины content	3		10	1
+43	2015-11-05 17:32:14.844905+05	3	Печенье с молоком content	3		10	1
+44	2015-11-05 17:34:47.357477+05	13	Печенье с чаем content	1		10	1
+45	2015-11-05 19:43:30.346576+05	6	Простые тонкие блины на молоке	1		7	1
+46	2015-11-05 19:43:47.957266+05	17	молоко	1		8	1
+47	2015-11-05 19:44:04.745428+05	17	молоко	3		8	1
+48	2015-11-05 19:44:12.507166+05	18	Молоко	1		8	1
+49	2015-11-05 19:44:26.764686+05	18	Молоко	3		8	1
+50	2015-11-05 19:44:45.327261+05	19	соль	1		8	1
+51	2015-11-05 19:49:23.837443+05	9	Соль "Сага" морская пищевая 500г картон	1		9	1
+52	2015-11-05 19:50:01.445793+05	10	Мука "Увелка" высший сорт 2кг	1		9	1
+53	2015-11-05 19:50:29.406658+05	11	Молоко "Пармалат" Низколактозное 1,8% 1л	1		9	1
+54	2015-11-05 19:50:51.199655+05	14	Печенье с молоком content	1		10	1
+55	2015-11-05 19:51:23.928221+05	15	Печенье сэндвич content	1		10	1
+56	2015-11-05 19:58:08.471247+05	14	Печенье с молоком content	2	Changed variation for recipecontent-variation relationship "RecipeContent_contents object".	10	1
 \.
 
 
@@ -925,7 +936,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pancakes
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 38, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 56, true);
 
 
 --
@@ -972,6 +983,7 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 12	cakes	0002_auto_20151103_0213	2015-11-03 02:13:56.705916+05
 13	cakes	0003_auto_20151103_0306	2015-11-03 03:07:05.029446+05
 14	cakes	0004_recipecontent	2015-11-03 03:14:26.95311+05
+15	cakes	0005_auto_20151105_1734	2015-11-05 17:34:19.770762+05
 \.
 
 
@@ -979,7 +991,7 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: pancakes
 --
 
-SELECT pg_catalog.setval('django_migrations_id_seq', 14, true);
+SELECT pg_catalog.setval('django_migrations_id_seq', 15, true);
 
 
 --
@@ -1116,7 +1128,7 @@ ALTER TABLE ONLY cakes_recipecontent_contents
 --
 
 ALTER TABLE ONLY cakes_recipecontent_contents
-    ADD CONSTRAINT cakes_recipecontent_contents_recipecontent_id_ingredient_id_key UNIQUE (recipecontent_id, ingredient_id);
+    ADD CONSTRAINT cakes_recipecontent_contents_recipecontent_id_ingredient_id_key UNIQUE (recipecontent_id, variation_id);
 
 
 --
@@ -1249,7 +1261,7 @@ CREATE INDEX cakes_recipecontent_contents_70544ee1 ON cakes_recipecontent_conten
 -- Name: cakes_recipecontent_contents_7a06a9e2; Type: INDEX; Schema: public; Owner: pancakes; Tablespace: 
 --
 
-CREATE INDEX cakes_recipecontent_contents_7a06a9e2 ON cakes_recipecontent_contents USING btree (ingredient_id);
+CREATE INDEX cakes_recipecontent_contents_7a06a9e2 ON cakes_recipecontent_contents USING btree (variation_id);
 
 
 --
@@ -1351,19 +1363,11 @@ ALTER TABLE ONLY auth_user_user_permissions
 
 
 --
--- Name: cakes_recip_recipecontent_id_27a0f4d6_fk_cakes_recipecontent_id; Type: FK CONSTRAINT; Schema: public; Owner: pancakes
+-- Name: cakes_recip_recipecontent_id_50271d85_fk_cakes_recipecontent_id; Type: FK CONSTRAINT; Schema: public; Owner: pancakes
 --
 
 ALTER TABLE ONLY cakes_recipecontent_contents
-    ADD CONSTRAINT cakes_recip_recipecontent_id_27a0f4d6_fk_cakes_recipecontent_id FOREIGN KEY (recipecontent_id) REFERENCES cakes_recipecontent(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: cakes_recipeconte_ingredient_id_2e321f06_fk_cakes_ingredient_id; Type: FK CONSTRAINT; Schema: public; Owner: pancakes
---
-
-ALTER TABLE ONLY cakes_recipecontent_contents
-    ADD CONSTRAINT cakes_recipeconte_ingredient_id_2e321f06_fk_cakes_ingredient_id FOREIGN KEY (ingredient_id) REFERENCES cakes_ingredient(id) DEFERRABLE INITIALLY DEFERRED;
+    ADD CONSTRAINT cakes_recip_recipecontent_id_50271d85_fk_cakes_recipecontent_id FOREIGN KEY (recipecontent_id) REFERENCES cakes_recipecontent(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -1372,6 +1376,14 @@ ALTER TABLE ONLY cakes_recipecontent_contents
 
 ALTER TABLE ONLY cakes_recipecontent
     ADD CONSTRAINT cakes_recipecontent_recipe_id_41bac876_fk_cakes_recipe_id FOREIGN KEY (recipe_id) REFERENCES cakes_recipe(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: cakes_recipecontent_variation_id_384c09db_fk_cakes_variation_id; Type: FK CONSTRAINT; Schema: public; Owner: pancakes
+--
+
+ALTER TABLE ONLY cakes_recipecontent_contents
+    ADD CONSTRAINT cakes_recipecontent_variation_id_384c09db_fk_cakes_variation_id FOREIGN KEY (variation_id) REFERENCES cakes_variation(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
