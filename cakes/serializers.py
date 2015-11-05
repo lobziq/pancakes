@@ -10,3 +10,7 @@ class RecipeContentSerializer(serializers.ModelSerializer):
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
+
+class VariationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Variation

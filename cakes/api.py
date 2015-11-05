@@ -25,14 +25,15 @@ class RecipeContentList(APIView):
             try:
                 include = params["include"]
                 for p in include:
-                    recipe_contents = recipe_contents.filter(contents__name__iexact = p)
+                    recipe_contents = recipe_contents.filter(contents__ingredient__name__iexact = p)
+
             except:
                 pass
 
             try:
                 exclude = params["exclude"]
                 for p in exclude:
-                    recipe_contents = recipe_contents.exclude(contents__name__iexact = p)
+                    recipe_contents = recipe_contents.exclude(contents__ingredient__name__iexact = p)
             except:
                 pass
 

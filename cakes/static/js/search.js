@@ -3,12 +3,18 @@ var searchApp = angular.module('searchApp', ['ngResource', 'searchApp.services']
 searchApp.controller('SearchCtrl', function ($scope, Recipes, Ingredients) {
     $scope.recipes = {};
     $scope.ingredients = {};
+    $scope.ingredientsSorted = {};
     $scope.include = [];
     $scope.exclude = [];
     $scope.filter = true;
     
     Ingredients.query(function(response) {
         $scope.ingredients = response;
+        for (var i = 0; i < $scope.ingredients.length; i++) {
+            var id = $scope.ingredients[i].id;
+            var name = $scope.ingredients[i].name;
+            $scope.ingredientsSorted[id] = name;
+        }
         //alert(response.name);
     });
     

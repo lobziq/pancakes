@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="container" ng-repeat="r in recipes">
-            <strong>{{r.recipe.name}} </strong><div ng-repeat="c in r.contents">{{c.name | lowercase}}</div>
+            <strong>{{r.recipe.name}} </strong><div ng-repeat="c in r.contents">{{ingredientsSorted[c.ingredient] | lowercase}}</div>
         </div>
         {% endverbatim %}
     </body>

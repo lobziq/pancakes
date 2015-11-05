@@ -22,7 +22,7 @@ class Recipe(models.Model):
 
 class RecipeContent(models.Model):
     recipe = models.ForeignKey(Recipe)
-    contents = models.ManyToManyField(Ingredient)
+    contents = models.ManyToManyField(Variation)
 
     def __str__(self):
         s = self.recipe.name + " content"
